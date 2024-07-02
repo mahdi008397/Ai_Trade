@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -29,7 +28,7 @@ class SplashScreen extends StatelessWidget {
               color: Color.fromRGBO(11, 0, 28, 0.82),
             ),
             child: Column(
-              children: [
+              children: [                
                 Container(
                   width: screenW,
                   height: screenH * 0.5,
