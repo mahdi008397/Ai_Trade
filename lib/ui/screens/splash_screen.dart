@@ -1,10 +1,38 @@
+import 'dart:developer';
 import 'dart:ui';
 
+import 'package:ai_trade/utils/first_user_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _asyncMethod();
+    });
+  }
+
+  _asyncMethod() async {
+    bool status = await FirstUserManager.read();
+
+    Future.delayed(const Duration(milliseconds: 3000), () {
+      if (status) {
+        context.go('/wellcome');
+      } else {
+        context.go('/home');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +56,7 @@ class SplashScreen extends StatelessWidget {
               color: Color.fromRGBO(11, 0, 28, 0.82),
             ),
             child: Column(
-              children: [                
+              children: [
                 Container(
                   width: screenW,
                   height: screenH * 0.5,

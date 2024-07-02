@@ -1,14 +1,36 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
+import 'package:ai_trade/utils/first_user_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'package:slide_to_act/slide_to_act.dart';
 
-class WellcomeScreen extends StatelessWidget {
+class WellcomeScreen extends StatefulWidget {
   const WellcomeScreen({super.key});
+
+  @override
+  State<WellcomeScreen> createState() => _WellcomeScreenState();
+}
+
+class _WellcomeScreenState extends State<WellcomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _asyncMethod();
+    });
+  }
+
+  _asyncMethod() async {
+    bool status = await FirstUserManager.read();
+
+    if (!status) {
+      // ignore: use_build_context_synchronously
+      context.go('/home');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +58,7 @@ class WellcomeScreen extends StatelessWidget {
             ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -83,7 +105,7 @@ class WellcomeScreen extends StatelessWidget {
                     filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                     child: Container(
                       width: screenW,
-                      height: screenH * 0.3,
+                      height: screenH * 0.405,
                       decoration: const BoxDecoration(
                         color: Color.fromRGBO(63, 0, 102, 0.01),
                         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -100,18 +122,15 @@ class WellcomeScreen extends StatelessWidget {
                         ),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            top: 25,
-                            left: screenW * 0.024,
-                            right: screenW * 0.024,
-                            bottom: 10),
+                        padding: const EdgeInsets.only(
+                            top: 25, left: 10, right: 10, bottom: 10),
                         child: Column(
                           children: [
                             const Text(
                               'Start analyzing and reviewing',
                               style: TextStyle(
                                 fontFamily: 'PoppinsMed',
-                                fontSize: 18,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w500,
                                 color: Color.fromRGBO(200, 200, 200, 1),
                               ),
@@ -131,7 +150,7 @@ class WellcomeScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             SlideAction(
-                              borderRadius: 10,
+                              borderRadius: 11,
                               elevation: 0,
                               height: 70,
                               innerColor:
@@ -177,9 +196,9 @@ class WellcomeScreen extends StatelessWidget {
                                 ),
                               ),
                               onSubmit: () {
+                                FirstUserManager.change(false);
+                                context.go('/home');
                                 return null;
-
-                                //do something
                               },
                             ),
                           ],
@@ -188,8 +207,8 @@ class WellcomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: screenH * 0.1,
+                const SizedBox(
+                  height: 20,
                 ),
               ],
             ),
