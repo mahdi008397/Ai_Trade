@@ -6,7 +6,13 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Colors.red,
+      backgroundColor: Colors.black54,
+      body: Center(
+        child: Text(
+          'میگن فقط کونیا میتونن این متنو بخونن',
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
     );
   }
 }

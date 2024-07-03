@@ -1,9 +1,9 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:ai_trade/utils/first_user_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -111,8 +111,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   ],
                 ),
                 const Spacer(),
-                // Lottie.asset('assets/images/loading.json',
-                //     width: 60, height: 60),
+                Lottie.asset('assets/images/loading.json',
+                    width: 60, height: 60),
                 SizedBox(
                   height: screenH * 0.044,
                 ),
