@@ -13,6 +13,7 @@ dependencies:
   bloc: ^8.1.4
   dio: ^5.4.3+1
   lottie: ^3.1.2
+  dartz: ^0.10.1
   get_it: ^7.7.0
   skeletons: ^0.0.3
   equatable: ^2.0.5

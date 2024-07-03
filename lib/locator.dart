@@ -11,7 +11,7 @@ setup() async {
   locator.registerSingleton<Dio>(
     Dio(
       BaseOptions(
-        baseUrl: 'https://api.nobitex.ir/',
+        baseUrl: 'https://min-api.cryptocompare.com/',
       ),
     ),
   );
