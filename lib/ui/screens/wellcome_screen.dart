@@ -135,8 +135,8 @@ class _WellcomeScreenState extends State<WellcomeScreen> {
                                 color: Color.fromRGBO(200, 200, 200, 1),
                               ),
                             ),
-                            const SizedBox(
-                              height: 25,
+                            SizedBox(
+                              height: screenH * 0.0276,
                             ),
                             const Text(
                               'You can analyze the buying and selling of digital\ncurrencies with Ai Trade',
@@ -147,6 +147,13 @@ class _WellcomeScreenState extends State<WellcomeScreen> {
                                 fontWeight: FontWeight.w400,
                                 color: Color.fromRGBO(235, 235, 235, 1),
                               ),
+                            ),
+                            SizedBox(
+                              height: screenH * 0.022,
+                            ),
+                            Image.asset(
+                              'assets/images/wellcome-vector.png',
+                              scale: 2,
                             ),
                             const Spacer(),
                             SlideAction(
@@ -207,8 +214,8 @@ class _WellcomeScreenState extends State<WellcomeScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
+                SizedBox(
+                  height: screenH * 0.022,
                 ),
               ],
             ),
