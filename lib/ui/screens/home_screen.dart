@@ -253,9 +253,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: ListView.builder(
                               itemCount: state.data.display.length,
                               itemBuilder: (context, index) {
-                                var keys = state.data.display.keys.toList();
                                 return CurrencyItemWidget(
-                                  name: state.data.display[index].usd.,
+                                  name:
+                                      state.data.display.keys.elementAt(index),
+                                  image:
+                                      'https://www.cryptocompare.com${state.data.display.values.elementAt(index).usd!.imageurl!}',
+                                  price: state.data.display.values
+                                      .elementAt(index)
+                                      .usd!
+                                      .price!,
+                                  status: state.data.raw.values
+                                      .elementAt(index)
+                                      .usd!
+                                      .changepct24Hour!
+                                      .toDouble(),
                                 );
                               },
                             ),
