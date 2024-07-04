@@ -16,7 +16,7 @@ class MainRepository extends IMainRepository {
       var res = await _data.getAllCurrency();
       return right(res);
     } catch (e) {
-      return left('Connection error');
+      return left(e.toString());
     }
   }
 }
