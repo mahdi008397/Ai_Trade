@@ -13,7 +13,7 @@ class CurrencyItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenW = MediaQuery.of(context).size.width;
-    double screenH = MediaQuery.of(context).size.height;
+    //double screenH = MediaQuery.of(context).size.height;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
@@ -87,7 +87,7 @@ class CurrencyItemWidget extends StatelessWidget {
                     builder: (context, constraints) {
                       if (status! >= 0) {
                         return Text(
-                          '${status!.toStringAsFixed(1)}%',
+                          '${status!.toStringAsFixed(2)}%',
                           style: const TextStyle(
                             fontFamily: 'PoppinsReg',
                             fontSize: 13,
@@ -97,7 +97,7 @@ class CurrencyItemWidget extends StatelessWidget {
                         );
                       } else {
                         return Text(
-                          '${status!.toStringAsFixed(1)}%',
+                          '${status!.toStringAsFixed(2)}%',
                           style: const TextStyle(
                             fontFamily: 'PoppinsReg',
                             fontSize: 13,

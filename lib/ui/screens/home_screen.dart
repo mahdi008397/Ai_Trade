@@ -1,14 +1,11 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:ui';
 
 import 'package:ai_trade/bloc/home/home_bloc.dart';
+import 'package:ai_trade/ui/widgets/currency_item_skeleton.dart';
 import 'package:ai_trade/ui/widgets/currency_item_widget.dart';
-import 'package:ai_trade/ui/widgets/main_cliper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
@@ -22,6 +19,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scroll = ScrollController();
   bool titleShow = false;
+  Timer? timer;
 
   @override
   void initState() {
@@ -29,6 +27,17 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider.of<HomeBloc>(context).add(
       GetHomeRequest(),
     );
+    timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      BlocProvider.of<HomeBloc>(context).add(
+        GetHomeRequest(),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -62,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(bottom: 150),
+              padding: EdgeInsets.only(bottom: screenH * 0.164),
               child: Align(
                 alignment: Alignment.bottomRight,
                 child: Image.asset(
@@ -77,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverAppBar(
                   automaticallyImplyLeading: false,
                   backgroundColor: Colors.transparent,
-                  expandedHeight: screenH * 0.768,
+                  expandedHeight: screenH * 0.760,
                   elevation: 0,
                   scrolledUnderElevation: 0,
                   bottom: PreferredSize(
@@ -132,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                   pinned: true,
-                  leadingWidth: 84,
+                  leadingWidth: screenH * 0.092,
                   flexibleSpace: FlexibleSpaceBar(
                     collapseMode: CollapseMode.pin,
                     stretchModes: const <StretchMode>[StretchMode.fadeTitle],
@@ -147,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               filter: ImageFilter.blur(sigmaY: 30, sigmaX: 30),
                               child: Container(
                                 width: screenW,
-                                height: 365,
+                                height: screenH * 0.4,
                                 decoration: const BoxDecoration(
                                   color: Colors.transparent,
                                   borderRadius:
@@ -155,12 +164,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   border: GradientBoxBorder(
                                     gradient: LinearGradient(
                                         colors: [
+                                          Colors.transparent,
                                           Color.fromRGBO(35, 24, 69, 1),
                                           Color.fromRGBO(67, 60, 145, 1),
                                         ],
                                         begin: Alignment.topCenter,
                                         end: Alignment.bottomCenter,
-                                        stops: [0.88, 1]),
+                                        stops: [0, 0.88, 1]),
                                     width: 1,
                                   ),
                                 ),
@@ -178,23 +188,152 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 30),
                             child: Column(
                               children: [
-                                ClipPath(
-                                  clipper: MainCliper(),
-                                  child: Container(
-                                    width: 370,
-                                    height: 220,
-                                    decoration: const BoxDecoration(
-                                        // gradient: LinearGradient(
-                                        //   colors: [
-                                        //     Color.fromRGBO(89, 190, 255, 1),
-                                        //     Color.fromRGBO(100, 0, 105, 1),
-                                        //   ],
-                                        //   begin: Alignment.topCenter,
-                                        //   end: Alignment.bottomCenter,
-                                        // ),
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(8)),
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(
+                                        sigmaX: 30, sigmaY: 30),
+                                    child: Container(
+                                      width: screenW,
+                                      height: screenH * 0.11,
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(8)),
+                                        border: Border.all(
+                                            color: const Color.fromRGBO(
+                                                67, 60, 144, 1),
+                                            width: 0.5),
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color.fromRGBO(89, 190, 255, 0.1),
+                                            Color.fromRGBO(100, 0, 105, 0.1),
+                                          ],
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
                                         ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.asset(
+                                            'assets/images/home-chart.png',
+                                            scale: 2,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          const Text(
+                                            'Analysis with AI',
+                                            style: TextStyle(
+                                              fontFamily: 'PoppinsReg',
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.w400,
+                                              color: Color.fromRGBO(
+                                                  117, 201, 255, 1),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                            sigmaX: 30, sigmaY: 30),
+                                        child: Container(
+                                          width: screenW * 0.407,
+                                          height: screenH * 0.11,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(8)),
+                                            border: Border.all(
+                                                color: const Color.fromRGBO(
+                                                    67, 60, 144, 1),
+                                                width: 0.5),
+                                            gradient: const LinearGradient(
+                                              colors: [
+                                                Color.fromRGBO(
+                                                    89, 190, 255, 0.1),
+                                                Color.fromRGBO(
+                                                    100, 0, 105, 0.1),
+                                              ],
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                            ),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              'Lorem 1',
+                                              style: TextStyle(
+                                                fontFamily: 'PoppinsReg',
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color.fromRGBO(
+                                                    117, 201, 255, 1),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
+                                      child: BackdropFilter(
+                                        filter: ImageFilter.blur(
+                                            sigmaX: 30, sigmaY: 30),
+                                        child: Container(
+                                          width: screenW * 0.407,
+                                          height: screenH * 0.11,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(8)),
+                                            border: Border.all(
+                                                color: const Color.fromRGBO(
+                                                    67, 60, 144, 1),
+                                                width: 0.5),
+                                            gradient: const LinearGradient(
+                                              colors: [
+                                                Color.fromRGBO(
+                                                    89, 190, 255, 0.1),
+                                                Color.fromRGBO(
+                                                    100, 0, 105, 0.1),
+                                              ],
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                            ),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              'Lorem 2',
+                                              style: TextStyle(
+                                                fontFamily: 'PoppinsReg',
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w400,
+                                                color: Color.fromRGBO(
+                                                    117, 201, 255, 1),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ],
                             ),
                           ),
@@ -245,12 +384,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: BlocBuilder<HomeBloc, HomeState>(
                       builder: (context, state) {
                         if (state is HomeLoadingState) {
-                          return const CircularProgressIndicator();
+                          return SizedBox(
+                            height: 5 * 76,
+                            child: ListView.builder(
+                              itemBuilder: (context, index) {
+                                return const CurrencyItemSkeleton();
+                              },
+                            ),
+                          );
                         }
                         if (state is HomeSuccessState) {
                           return SizedBox(
-                            height: screenH,
+                            height: state.data.display.length * 76,
                             child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: state.data.display.length,
                               itemBuilder: (context, index) {
                                 return CurrencyItemWidget(
