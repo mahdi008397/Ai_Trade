@@ -1,4 +1,5 @@
 import 'package:ai_trade/bloc/home/home_bloc.dart';
+import 'package:ai_trade/ui/screens/analyze_screen.dart';
 import 'package:ai_trade/ui/screens/home_screen.dart';
 import 'package:ai_trade/ui/screens/splash_screen.dart';
 import 'package:ai_trade/ui/screens/wellcome_screen.dart';
@@ -22,6 +23,10 @@ class Routes {
           create: (context) => HomeBloc(),
           child: const HomeScreen(),
         ),
+      ),
+      GoRoute(
+        path: '/analyze',
+        builder: (context, state) => const AnalyzeScreen(),
       ),
     ],
   );

@@ -1,11 +1,13 @@
+import 'package:ai_trade/data/datasources/remote/ai_datasource.dart';
 import 'package:ai_trade/data/datasources/remote/main_datasource.dart';
+import 'package:ai_trade/data/repositories/ai_repository.dart';
 import 'package:ai_trade/data/repositories/main_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 var locator = GetIt.instance;
-const String key = '-';
+const String apiKey = ':/';
 
 setup() async {
   locator.registerSingleton<Dio>(
@@ -21,6 +23,8 @@ setup() async {
   );
 
   locator.registerFactory<IMainDatasource>(() => MainDatasource());
+  locator.registerFactory<IAiDatasource>(() => AiDatasource());
 
   locator.registerFactory<IMainRepository>(() => MainRepository());
+  locator.registerFactory<IAiRepository>(() => AiRepository());
 }

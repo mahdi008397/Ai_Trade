@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:ai_trade/locator.dart';
 import 'package:ai_trade/route/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:url_strategy/url_strategy.dart';
 
@@ -21,6 +24,11 @@ void main() async {
   ]).then((value) => runApp(const MainApp()));
 
   setPathUrlStrategy();
+
+  final model = GenerativeModel(model: "gemini-1.5-flash", apiKey: apiKey);
+  final res = await model.generateContent([Content.text("hi, whats your name??")]);
+
+  log(res.text!);
 
   runApp(const MainApp());
 }

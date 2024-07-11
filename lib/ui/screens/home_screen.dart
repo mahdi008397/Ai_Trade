@@ -7,6 +7,7 @@ import 'package:ai_trade/ui/widgets/currency_item_skeleton.dart';
 import 'package:ai_trade/ui/widgets/currency_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -81,6 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             CustomScrollView(
+              physics: const BouncingScrollPhysics(),
               controller: _scroll,
               slivers: [
                 SliverAppBar(
@@ -400,20 +402,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: state.data.display.length,
                               itemBuilder: (context, index) {
-                                return CurrencyItemWidget(
-                                  name:
-                                      state.data.display.keys.elementAt(index),
-                                  image:
-                                      'https://www.cryptocompare.com${state.data.display.values.elementAt(index).usd!.imageurl!}',
-                                  price: state.data.display.values
-                                      .elementAt(index)
-                                      .usd!
-                                      .price!,
-                                  status: state.data.raw.values
-                                      .elementAt(index)
-                                      .usd!
-                                      .changepct24Hour!
-                                      .toDouble(),
+                                return GestureDetector(
+                                  onTap: () {
+                                    context.go('/analyze');
+                                  },
+                                  child: CurrencyItemWidget(
+                                    name: state.data.display.keys
+                                        .elementAt(index),
+                                    image:
+                                        'https://www.cryptocompare.com${state.data.display.values.elementAt(index).usd!.imageurl!}',
+                                    price: state.data.display.values
+                                        .elementAt(index)
+                                        .usd!
+                                        .price!,
+                                    status: state.data.raw.values
+                                        .elementAt(index)
+                                        .usd!
+                                        .changepct24Hour!
+                                        .toDouble(),
+                                  ),
                                 );
                               },
                             ),
